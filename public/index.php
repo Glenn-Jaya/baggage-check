@@ -1,17 +1,5 @@
 <?php
 require_once('../private/initialize.php');
-
-$items = [
-	['id' => '1', 'name' =>'Hydrogen peroxide', 'carry_on' => '1', 'checked' => '1', 'description' => '3% hydrogen peroxide found in drugstores and used to clean cuts is considered
-essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.'],
-	['id' => '2', 'name' =>'Lithium ion batteries in a device (between 100-160 Wh)', 'carry_on' => '1', 'checked' => '5', 'description' => 'Lithium ion batteries exceeding a watt-hour (Wh) rating of 100 Wh but not exceeding 160 Wh may be carried in a device in either carry-on or checked baggage with air carrier approval. Spare batteries: No more than 2 individually protected spare lithium ion batteries of 100-160 Wh are allowed per person in carry-on, with the approval of the air carrier. Spare lithium batteries of 100-160 Wh are permitted only with air carrier approval in checked baggage.'],
-	['id' => '3', 'name' =>'Incendiary projectiles', 'carry_on' => '2', 'checked' => '2', 'description' => "NULL"],
-	['id' => '5', 'name' =>'Inhalers', 'carry_on' => '3', 'checked' => '1', 'description' => 'Inhalers under the 100ml do not need to meet any requirements for medication but need to be packed in the 1L bag for containers of liquids, aerosols and gels. Inhalers that are over the 100ml volumetric limit must meet the prescribed medication requirements. Documentation to support your medical needs or condition is not required; however, if you feel that it would help ease your screening, it should be presented to the screening officer
-along with your medically necessary items.'],
-	['id' => '6', 'name' =>'Baking power or baking soda', 'carry_on' => '4', 'checked' => '1', 'description' => "Baking powder or baking soda: Certain powders and granular materials in your carry-on are limited to a total quantity of 350 ml or less (roughly the size of a soda can)."]
-];
-
-
 ?>
 
 <!DOCTYPE html>
@@ -27,16 +15,28 @@ along with your medically necessary items.'],
     <h1>Coming Soon!</h1>
 
       <form action = "<?php echo url_for("/displayTemp.php"); ?>" method = "POST">
+
         <input type="text" name="item_name" placeholder= "Enter item to search"
-        ><button type="submit"><i class="fa fa-search"></i></button>
+        ><button type="submit" class = "searchButton"><i class="fa fa-search"></i></button>
+
+        <section class = "categoryRow">
+				      <button class ="categoryBtn">Electronics</button>
+				      <button class ="categoryBtn">Firearms & Ammunition</button>
+				      <button class ="categoryBtn">Food & Drink</button>
+				      <button class ="categoryBtn">Household & Tools</button>
+        </section>
+        <section class = "categoryRow">
+				      <button class ="categoryBtn">Lighters & Flammables</button>
+				      <button class ="categoryBtn">Medical</button>
+				      <button class ="categoryBtn">Personal Items</button>
+				      <button class ="categoryBtn">Sports & Camping</button>
+        </section>
       </form>
 
-	<?php
-		$item = $items[0];
-	 ?>
+
 
 	<section class = "item_display">
-		<h1> <?php echo $item['name']; ?></h1>
+		<h1> Hydrogen Peroxide</h1>
 		<div class = "allowedStatus">
 			<div class = "allowedBox">
 				<span>Carried</span>
@@ -53,7 +53,7 @@ along with your medically necessary items.'],
 	</section>
 
 <section class = "item_display">
-		<h1> <?php echo $item['name']; ?></h1>
+		<h1> Hydrogen Peroxide</h1>
 		<div class = "allowedStatus">
 			<div class = "allowedBox">
 				<span>Carried</span>
@@ -71,7 +71,7 @@ along with your medically necessary items.'],
 	</section>
 
 <section class = "item_display">
-		<h1> <?php echo $item['name']; ?></h1>
+		<h1> Hydrogen Peroxide</h1>
 		<div class = "allowedStatus">
 			<div class = "allowedBox">
 				<span>Carried</span>

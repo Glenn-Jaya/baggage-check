@@ -26,7 +26,7 @@ input[type=text]
 
 }
 
-button {
+.searchButton {
 	/* float: right; */
 	width: 20%; /* 20% without float puts it in a new line */
 	height: 100%;
@@ -43,6 +43,7 @@ form {
 	background-color: purple;
 	height: 60px;
 	margin-bottom: 20px;
+	/* overflow: auto; */
 }
 
 .item_display{
@@ -91,4 +92,21 @@ form {
 	/* display: inline; */
 	/* padding: 0 10%; */
 	flex: 1;
+}
+
+.categoryBtn {
+	max-width: 100%;
+	max-width: 75px;
+	min-height: 50px;
+	flex: 1;
+	border: none;
+	color: white;
+	background-color: #30AB58;
+	/* margin:5px; */
+}
+
+.categoryRow{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
 }
