@@ -16,8 +16,10 @@ require_once('../private/initialize.php');
 
       <form action = "<?php echo url_for("/displayTemp.php"); ?>" method = "POST">
 
-        <input type="text" name="item_name" placeholder= "Enter item to search"
-        ><button type="submit" class = "searchButton"><i class="fa fa-search"></i></button>
+        <div class = "searchBar">
+          <input type="text" name="item_name" placeholder= "Enter item to search"
+          ><button type="submit" class = "searchButton"><i class="fa fa-search"></i></button>
+        </div>
 
         <section class = "categoryRow">
 				      <button class ="categoryBtn">Electronics</button>

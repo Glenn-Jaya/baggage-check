@@ -10,7 +10,6 @@ h1 {
 
 
 body {
-        /* background-color: #36160c; */
         background-color: #84714F;
       }
 
@@ -35,6 +34,13 @@ input[type=text]
 	color: white;
 	border: none;
 	vertical-align: top; /* look into what this does cause it fixed the issue */
+}
+
+.searchBar {
+	display: inline;
+	/* margin: 10px 0px; */
+	/* margin-left: 10px; */
+	/* margin-right: 10px; */
 }
 
 form {
@@ -95,9 +101,9 @@ form {
 }
 
 .categoryBtn {
-	max-width: 100%;
+	/* max-width: 100%; */
 	max-width: 75px;
-	min-height: 50px;
+	min-height: 40px;
 	flex: 1;
 	border: none;
 	color: white;
