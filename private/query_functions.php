@@ -40,5 +40,35 @@ function find_allowed_name_by_id($id)
   // if empty set we want it to return ""
 }
 
+function findItemsInCategory($id)
+{
+  global $db;
+
+  $sql = "SELECT * FROM items ";
+  $sql .= "INNER JOIN item_category on items.id = item_category.item_id ";
+  $sql .= "INNER JOIN categories on categories.id = item_category.category_id ";
+  $sql .= "WHERE categories.id = '" . $id . "'";
+
+  $result = mysqli_query($db, $sql);
+  confirm_result_set($result);
+
+  // return find_all_items();
+  return $result;
+}
+
+function findItemNameById($id)
+{
+    global $db;
+    $foundName = "";
+    $sql = "SELECT * FROM items where id = '" . $id . "' ";
+    $sql .= "LIMIT 1";
+
+    $resultSet = mysqli_query($db, $sql);
+    $allowedAssocRow = mysqli_fetch_assoc($resultSet);
+    $foundName = $allowedAssocRow ["name"];
+
+    return($foundName);
+}
+
 
 ?>
