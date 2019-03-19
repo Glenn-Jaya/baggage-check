@@ -97,15 +97,30 @@
     {
       if ($_POST[$categoryName] === "selected")
       {
-        if(!in_array($categoryName, $_SESSION['selected']))
-          $_SESSION['selected'][$categoryName] = "selected";
+            $_SESSION['selected'][$categoryName] = "selected";
       }
       elseif ($_POST[$categoryName] === "not_selected")
       {
-        if(in_array($categoryName, $_SESSION['selected']))
-          // TODO: MIGHT NEED TO DELETE IT ENTIRELY WITH THE KEY
+        // if(in_array($categoryName, $_SESSION['selected']))
+
+         if(isset($_SESSION['selected'][$categoryName]) &&
+            "selected" === $_SESSION['selected'][$categoryName])
+        {
           $_SESSION['selected'][$categoryName] = "";
+        }
       }
+    }
+  }
+
+
+  function checkSelected($categoryName)
+  {
+    if (isset($_SESSION['selected'][$categoryName]) && $_SESSION['selected'][$categoryName]==='selected')
+    {
+      return true;
+    }
+    else {
+      return false;
     }
   }
  ?>
