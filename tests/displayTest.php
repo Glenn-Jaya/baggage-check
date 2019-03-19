@@ -7,7 +7,7 @@
 	use PHPUnit\Framework\TestCase;
 
 
-  class allowedTest extends TestCase {
+  class displayTest extends TestCase {
 
     // better way would be to get directly from DB so if db ever changes it won't break test
 
