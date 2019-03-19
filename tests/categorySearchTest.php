@@ -48,6 +48,39 @@
 
     }
 
+
+		public function testQueryItemsInMultipleCategories()
+		{
+			$category1 = 6;
+			$category2 = 7;
+
+			// hydrogen peroxide should be in both category 6 and 7
+
+			$catArray = [$category1, $category2];
+
+			$itemsSet = findItemsInMultCategories($catArray);
+			// $itemsSet = find_all_items(); // used to make sure the test was working properly
+			$peroxideFoundAndInhalersNotFound = false;
+			$foundHydrogenPeroxide = false;
+			$foundInhalers = false;
+
+			while ($item = mysqli_fetch_assoc($itemsSet))
+			{
+        $foundName = findItemNameById($item['id']);
+				if ($foundInhalers== false && $foundName === "Inhalers")
+				{
+					$peroxideFoundAndInhalersNotFound = false;
+					$foundInhalers = true;
+				}
+				if ($foundHydrogenPeroxide == false && $foundName === "Hydrogen peroxide");
+				{
+					$foundHydrogenPeroxide = true;
+				}
+			}
+			$this ->assertTrue($foundHydrogenPeroxide, "did not find hydrogen peroxide") ;
+			$this ->assertFalse($foundInhalers, "found inhalers when shouldn't have");
+		}
+
   }
 
 
