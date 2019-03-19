@@ -2,6 +2,17 @@
   require_once('../private/initialize.php');
 
   $item_name = $_POST['item_name']??"";
+
+  // $electronics_cat = $_POST['electronics']??"";
+  // $firearms_cat = $_POST['firearms-ammunition']??"";
+  // $food_cat = $_POST['food-drink']??"";
+  // $household_cat = $_POST['household-tools']??"";
+  // $flammables_cat = $_POST['lighters-flammables']??"";
+  // $medical_cat = $_POST['medical']??"";
+  // $personal_cat = $_POST['personal-items']??"";
+  // $sports_cat = $_POST['sports-camping']??"";
+  //
+  // echo "to delete";
 ?>
 
 <!DOCTYPE html>

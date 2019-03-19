@@ -24,16 +24,16 @@ require_once('../private/initialize.php');
 
         <!-- Note might have to remove the type = buttons below so that it submits every time and every time it does a category search -->
         <section class = "categoryRow">
-				      <button type = "button" name = "electronics" class ="categoryBtn">Electronics</button>
-				      <button type = "button" name = "firearms-ammunition" class ="categoryBtn">Firearms & Ammunition</button>
-				      <button type = "button" name = "food-drink" class ="categoryBtn">Food & Drink</button>
-				      <button type = "button" name = "household-tools" class ="categoryBtn">Household & Tools</button>
+				      <button type = "button" name = "electronics" class ="categoryBtn" value = "not_selected">Electronics</button>
+				      <button type = "button" name = "firearms-ammunition" class ="categoryBtn" value = "not_selected">Firearms & Ammunition</button>
+				      <button type = "button" name = "food-drink" class ="categoryBtn" value = "not_selected">Food & Drink</button>
+				      <button type = "button" name = "household-tools" class ="categoryBtn" value = "not_selected">Household & Tools</button>
         </section>
         <section class = "categoryRow">
-				      <button type = "button" name = "lighters-flammables" class ="categoryBtn">Lighters & Flammables</button>
-				      <button type = "button" name = "medical" class ="categoryBtn">Medical</button>
-				      <button type = "button" name = "personal-items" class ="categoryBtn">Personal Items</button>
-				      <button type = "button" name = "sports-camping" class ="categoryBtn">Sports & Camping</button>
+				      <button type = "button" name = "lighters-flammables" class ="categoryBtn" value = "not_selected">Lighters & Flammables</button>
+				      <button type = "button" name = "medical" class ="categoryBtn" value = "not_selected">Medical</button>
+				      <button type = "button" name = "personal-items" class ="categoryBtn" value = "not_selected">Personal Items</button>
+				      <button type = "button" name = "sports-camping" class ="categoryBtn" value = "not_selected">Sports & Camping</button>
         </section>
       </form>
 
@@ -100,10 +100,13 @@ require_once('../private/initialize.php');
           {
             this.classList.remove("categoryBtn");
             this.classList.add("selectedBtn");
+            // might not do this anymore b/c might gotta use checkboxes T_T
+            this.value = "selected";
           }
           else {
             this.classList.remove("selectedBtn");
             this.classList.add("categoryBtn");
+            this.value = "not_selected";
           }
       }
 
