@@ -75,4 +75,37 @@
 
     return $displayCode;
   }
+
+  function initializeSessions()
+      {
+        $_SESSION['selected'] = [
+          'electronics'=>'',
+          'firearms-ammunition' =>'',
+          'food-drink' =>'',
+          'household-tools' =>'',
+          'lighters-flammables' =>'',
+          'medical' =>'',
+          'personal-items' =>'',
+          'personal' =>'',
+          'sports-camping' =>''
+        ];
+      }
+
+  function updateSelected($categoryName)
+  {
+    if(isset($_POST[$categoryName]))
+    {
+      if ($_POST[$categoryName] === "selected")
+      {
+        if(!in_array($categoryName, $_SESSION['selected']))
+          $_SESSION['selected'][$categoryName] = "selected";
+      }
+      elseif ($_POST[$categoryName] === "not_selected")
+      {
+        if(in_array($categoryName, $_SESSION['selected']))
+          // TODO: MIGHT NEED TO DELETE IT ENTIRELY WITH THE KEY
+          $_SESSION['selected'][$categoryName] = "";
+      }
+    }
+  }
  ?>
