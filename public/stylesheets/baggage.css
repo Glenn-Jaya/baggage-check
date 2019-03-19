@@ -9,11 +9,9 @@ h1 {
 	color: #30AB58;
 }
 
-
 body {
         background-color: #84714F;
       }
-
 
 input[type=text]
 {
@@ -109,4 +107,15 @@ form {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 10px;
+}
+
+.selectedBtn {
+	/* background-color: red; */
+	background-color: #E2F1AF;
+	max-width: 120px;
+	min-height: 40px;
+	flex: 1;
+	border: none;
+	/* color: white; */
+	color: #36160c;
 }
