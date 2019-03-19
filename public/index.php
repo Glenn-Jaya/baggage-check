@@ -1,5 +1,6 @@
 <?php
 require_once('../private/initialize.php');
+$item_name = $_POST['item_name']??"";
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,8 @@ require_once('../private/initialize.php');
   <body>
     <h1>Coming Soon!</h1>
 
-      <form action = "<?php echo url_for("/displayTemp.php"); ?>" method = "POST">
+      <!-- <form action = "<?php //echo url_for("/displayTemp.php"); ?>" method = "POST"> -->
+      <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
       <!-- <form action = "" method = "POST"> -->
 
         <div class = "searchBar">
@@ -31,66 +33,13 @@ require_once('../private/initialize.php');
         </section>
         <section class = "categoryRow">
 				      <button type = "button" name = "lighters-flammables" class ="categoryBtn" value = "not_selected">Lighters & Flammables</button>
-				      <button type = "button" name = "medical" class ="categoryBtn" value = "not_selected">Medical</button>
-				      <button type = "button" name = "personal-items" class ="categoryBtn" value = "not_selected">Personal Items</button>
+				      <button type = "submit" name = "medical" class ="categoryBtn" value = "not_selected">Medical</button>
+				      <button type = "submit" name = "personal-items" class ="categoryBtn" value = "not_selected">Personal Items</button>
 				      <button type = "button" name = "sports-camping" class ="categoryBtn" value = "not_selected">Sports & Camping</button>
         </section>
       </form>
 
-
-
-	<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Yes"); ?>
-			</div>
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("No"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
-
-<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Yes (<100ml)"); ?>
-			</div>
-
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("Yes (<350ml)"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
-
-<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Check with carrier"); ?>
-			</div>
-
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("Check with carrier"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
+		</section>
 
     <script>
 
@@ -115,6 +64,64 @@ require_once('../private/initialize.php');
         buttons.item(i).addEventListener("click", selectButton);
       }
     </script>
+
+    <?php
+      echo $item_name;
+      $items_set = find_all_items();
+
+      $medical_cat = $_POST['medical']??"";
+      $personal_cat = $_POST['personal-items']??"";
+
+
+      // isset($_POST['medical']) ? if (// text = selected) add to array : else do nothing
+      // if(isset($_POST['medical'])) echo "medical"; // REPLACE WITH ADD TO SESSION VAR
+
+
+
+      session_start();
+      if(!isset($_SESSION['selected'])) { $_SESSION['selected'] = []; }
+      $_SESSION['selected']?? initializeSessions();
+      //
+      // if (!in_array($))
+
+      // if(isset($_POST['medical']))
+      // {
+      //   if ($_POST['medical'] === "selected")
+      //   {
+      //     if(!in_array('medical', $_SESSION['selected']))
+      //       $_SESSION['selected']['medical'] = "selected";
+      //   }
+      //   elseif ($_POST['medical'] === "not_selected")
+      //   {
+      //     if(in_array('medical', $_SESSION['selected']))
+      //       // delete from session array
+      //       $_SESSION['selected']['medical'] = "";
+      //   }
+      // }
+
+
+      foreach ($_POST as $name =>$value)
+      {
+        if ($name !== "itemName")
+        {
+          updateSelected($name);
+        }
+      }
+      // updateSelected('medical');
+
+      echo "break";
+
+
+
+      while($item = mysqli_fetch_assoc($items_set))
+      {
+        // If db field is null, it's returned to php and php understands it as null with is_null() but htmlspecialchars converts null to an empty string ""
+        // echo "<br><br>" . h($item["name"]) . ",<br> id=" . h($item["id"]) . ",<br> carry_on=" . h($item["carry_on"]). ",<br> checked=" . h($item["checked"]). ",<br> description=" . h($item["description"]);
+        echo createItemDisplay($item);
+        // echo createItemDisplay2($item);
+      }
+      mysqli_free_result($items_set);
+    ?>
 
   </body>
 </html>
