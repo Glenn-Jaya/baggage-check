@@ -70,5 +70,22 @@ function findItemNameById($id)
     return($foundName);
 }
 
+function findItemsInMultCategories($categoriesArray)
+{
+  global $db;
+
+  $sql = "SELECT * FROM items as it ";
+  $sql .= "INNER JOIN item_category AS ic on it.id = ic.item_id ";
+  $categoriesInQuotes = "'".implode("','", $categoriesArray)."'";
+  $sql .= "WHERE ic.category_id IN ( " . $categoriesInQuotes . ") ";
+  $sql .= "GROUP BY it.id ";
+  $sql .= "HAVING COUNT(it.id) = '" . count($categoriesArray) . "'";
+
+  $result = mysqli_query($db, $sql);
+  confirm_result_set($result);
+
+  return($result);
+}
+
 
 ?>
