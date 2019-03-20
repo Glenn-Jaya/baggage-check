@@ -87,5 +87,20 @@ function findItemsInMultCategories($categoriesArray)
   return($result);
 }
 
+function findCategoryIdByName($categoryName)
+{
+    global $db;
+    $foundID = "";
+    $sql = "SELECT * FROM categories where name = '" . $categoryName . "' ";
+    $sql .= "LIMIT 1";
+
+    $resultSet = mysqli_query($db, $sql);
+    $allowedAssocRow = mysqli_fetch_assoc($resultSet);
+    $foundID = $allowedAssocRow ["id"];
+
+    return($foundID);
+}
+
+
 
 ?>
