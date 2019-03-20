@@ -138,8 +138,28 @@
     return $categorySelected;
   }
 
+
+  $categoriesNameIdAssoc = ['electronics'=> '1', 'firearms-ammunition' => '2', 'food-drink' => '3',
+                            'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
+                            'personal-items'=>'7', 'sports-camping'=>'8'];
+
   function convertCategoryNameToId($categoryName)
   {
-    
+    // TODO Concert this to look from the database directly instead of assoc array
+    global $categoriesNameIdAssoc;
+    return $categoriesNameIdAssoc[$categoryName];
+  }
+
+  function convertSessionSelectedToArrayOfIDs()
+  {
+    $returnArray = [];
+    foreach($_SESSION['selected'] as $name => $value)
+    {
+      if ($value === 'selected' )
+      {
+        $returnArray[] = convertCategoryNameToId($name);
+      }
+    }
+    return $returnArray;
   }
  ?>
