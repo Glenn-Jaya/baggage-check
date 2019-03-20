@@ -121,7 +121,10 @@ echo "break";
         mysqli_free_result($items_set);
       }
       else {
-        $items_set = findItemsInMultCategories([6]);
+        $categoriesArray = convertSessionSelectedToArrayOfIDs();
+        // $items_set = findItemsInMultCategories([6]);
+        $items_set = findItemsInMultCategories($categoriesArray);
+
         while($item = mysqli_fetch_assoc($items_set))
         {
           echo createItemDisplay($item);
