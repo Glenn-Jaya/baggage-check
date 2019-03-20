@@ -108,43 +108,25 @@ echo "break";
     </script>
 
     <?php
-      // // echo $item_name;
-      // $items_set = find_all_items();
-      //
-      // $medical_cat = $_POST['medical']??"";
-      // $personal_cat = $_POST['personal-items']??"";
-      //
-      //
-      // // isset($_POST['medical']) ? if (// text = selected) add to array : else do nothing
-      // // if(isset($_POST['medical'])) echo "medical"; // REPLACE WITH ADD TO SESSION VAR
-      //
-      //
-      //
-      // // session_start();
-      // if(!isset($_SESSION['selected'])) { $_SESSION['selected'] = []; }
-      // $_SESSION['selected']?? initializeSessions();
-      //
-      // foreach ($_POST as $name =>$value)
-      // {
-      //   if ($name !== "itemName")
-      //   {
-      //     updateSelected($name);
-      //   }
-      // }
-      // // updateSelected('medical');
-      //
-      // echo "break";
-      //
-      //
-      //
-      while($item = mysqli_fetch_assoc($items_set))
+
+      if (!anyCategoriesSelected())
       {
-        // If db field is null, it's returned to php and php understands it as null with is_null() but htmlspecialchars converts null to an empty string ""
-        // echo "<br><br>" . h($item["name"]) . ",<br> id=" . h($item["id"]) . ",<br> carry_on=" . h($item["carry_on"]). ",<br> checked=" . h($item["checked"]). ",<br> description=" . h($item["description"]);
-        echo createItemDisplay($item);
-        // echo createItemDisplay2($item);
+        while($item = mysqli_fetch_assoc($items_set))
+        {
+          // If db field is null, it's returned to php and php understands it as null with is_null() but htmlspecialchars converts null to an empty string ""
+          // echo "<br><br>" . h($item["name"]) . ",<br> id=" . h($item["id"]) . ",<br> carry_on=" . h($item["carry_on"]). ",<br> checked=" . h($item["checked"]). ",<br> description=" . h($item["description"]);
+          echo createItemDisplay($item);
+          // echo createItemDisplay2($item);
+        }
+        mysqli_free_result($items_set);
       }
-      mysqli_free_result($items_set);
+      else {
+        $items_set = findItemsInMultCategories([6]);
+        while($item = mysqli_fetch_assoc($items_set))
+        {
+          echo createItemDisplay($item);
+        }
+      }
     ?>
 
   </body>

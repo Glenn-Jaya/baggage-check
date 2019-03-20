@@ -81,6 +81,18 @@
 			$this ->assertFalse($foundInhalers, "found inhalers when shouldn't have");
 		}
 
+	public function testGetCategoryIDFromName()
+	{
+		$this -> assertEquals('1', findCategoryIdByName('electronics'));
+		// $this -> assertEquals('2', findCategoryIdByName('firearms-ammunition'));
+		$this -> assertEquals('3', findCategoryIdByName('food-drink'));
+		$this -> assertEquals('4', findCategoryIdByName('household-tools'));
+		$this -> assertEquals('5', findCategoryIdByName('lighters-flammables'));
+		$this -> assertEquals('6', findCategoryIdByName('medical'));
+		$this -> assertEquals('7', findCategoryIdByName('personal-items'));
+		$this -> assertEquals('8', findCategoryIdByName('sports-camping'));
+	}
+
   }
 
 

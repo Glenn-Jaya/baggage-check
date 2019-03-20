@@ -78,6 +78,7 @@
 
   function initializeSessions()
       {
+        $_SESSION ['item_name'] = '';
         $_SESSION['selected'] = [
           'electronics'=>'',
           'firearms-ammunition' =>'',
@@ -122,5 +123,23 @@
     else {
       return false;
     }
+  }
+
+  function anyCategoriesSelected()
+  {
+    $categorySelected = false;
+    foreach ($_SESSION['selected'] as $categoryValue)
+    {
+      if ($categoryValue === 'selected')
+      {
+        $categorySelected = true;
+      }
+    }
+    return $categorySelected;
+  }
+
+  function convertCategoryNameToId($categoryName)
+  {
+    
   }
  ?>
