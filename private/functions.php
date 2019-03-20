@@ -75,4 +75,91 @@
 
     return $displayCode;
   }
+
+  function initializeSessions()
+      {
+        $_SESSION ['item_name'] = '';
+        $_SESSION['selected'] = [
+          'electronics'=>'',
+          'firearms-ammunition' =>'',
+          'food-drink' =>'',
+          'household-tools' =>'',
+          'lighters-flammables' =>'',
+          'medical' =>'',
+          'personal-items' =>'',
+          'personal' =>'',
+          'sports-camping' =>''
+        ];
+      }
+
+  function updateSelected($categoryName)
+  {
+    if(isset($_POST[$categoryName]))
+    {
+      if ($_POST[$categoryName] === "selected")
+      {
+            $_SESSION['selected'][$categoryName] = "selected";
+      }
+      elseif ($_POST[$categoryName] === "not_selected")
+      {
+        // if(in_array($categoryName, $_SESSION['selected']))
+
+         if(isset($_SESSION['selected'][$categoryName]) &&
+            "selected" === $_SESSION['selected'][$categoryName])
+        {
+          $_SESSION['selected'][$categoryName] = "";
+        }
+      }
+    }
+  }
+
+
+  function checkSelected($categoryName)
+  {
+    if (isset($_SESSION['selected'][$categoryName]) && $_SESSION['selected'][$categoryName]==='selected')
+    {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  function anyCategoriesSelected()
+  {
+    $categorySelected = false;
+    foreach ($_SESSION['selected'] as $categoryValue)
+    {
+      if ($categoryValue === 'selected')
+      {
+        $categorySelected = true;
+      }
+    }
+    return $categorySelected;
+  }
+
+
+  $categoriesNameIdAssoc = ['electronics'=> '1', 'firearms-ammunition' => '2', 'food-drink' => '3',
+                            'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
+                            'personal-items'=>'7', 'sports-camping'=>'8'];
+
+  function convertCategoryNameToId($categoryName)
+  {
+    // TODO Concert this to look from the database directly instead of assoc array
+    global $categoriesNameIdAssoc;
+    return $categoriesNameIdAssoc[$categoryName];
+  }
+
+  function convertSessionSelectedToArrayOfIDs()
+  {
+    $returnArray = [];
+    foreach($_SESSION['selected'] as $name => $value)
+    {
+      if ($value === 'selected' )
+      {
+        $returnArray[] = convertCategoryNameToId($name);
+      }
+    }
+    return $returnArray;
+  }
  ?>

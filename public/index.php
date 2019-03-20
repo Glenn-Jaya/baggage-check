@@ -1,5 +1,46 @@
 <?php
 require_once('../private/initialize.php');
+session_start(); // thought put here maybe that's category button not working
+$item_name = $_POST['item_name']??"";
+
+// echo $item_name;
+$items_set = find_all_items();
+
+$medical_cat = $_POST['medical']??"";
+$personal_cat = $_POST['personal-items']??"";
+
+
+// isset($_POST['medical']) ? if (// text = selected) add to array : else do nothing
+// if(isset($_POST['medical'])) echo "medical"; // REPLACE WITH ADD TO SESSION VAR
+
+
+
+// session_start();
+if(!isset($_SESSION['selected'])) { initializeSessions(); }
+// initializeSessions();
+
+foreach ($_POST as $name =>$value)
+{
+  if ($name !== "itemName")
+  {
+    updateSelected($name);
+  }
+}
+// updateSelected('medical');
+
+echo "break";
+
+
+
+// while($item = mysqli_fetch_assoc($items_set))
+// {
+//   // If db field is null, it's returned to php and php understands it as null with is_null() but htmlspecialchars converts null to an empty string ""
+//   // echo "<br><br>" . h($item["name"]) . ",<br> id=" . h($item["id"]) . ",<br> carry_on=" . h($item["carry_on"]). ",<br> checked=" . h($item["checked"]). ",<br> description=" . h($item["description"]);
+//   echo createItemDisplay($item);
+//   // echo createItemDisplay2($item);
+// }
+// mysqli_free_result($items_set);
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +55,8 @@ require_once('../private/initialize.php');
   <body>
     <h1>Coming Soon!</h1>
 
-      <form action = "<?php echo url_for("/displayTemp.php"); ?>" method = "POST">
+      <!-- <form action = "<?php //echo url_for("/displayTemp.php"); ?>" method = "POST"> -->
+      <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
       <!-- <form action = "" method = "POST"> -->
 
         <div class = "searchBar">
@@ -24,73 +66,22 @@ require_once('../private/initialize.php');
 
         <!-- Note might have to remove the type = buttons below so that it submits every time and every time it does a category search -->
         <section class = "categoryRow">
-				      <button type = "button" name = "electronics" class ="categoryBtn" value = "not_selected">Electronics</button>
-				      <button type = "button" name = "firearms-ammunition" class ="categoryBtn" value = "not_selected">Firearms & Ammunition</button>
-				      <button type = "button" name = "food-drink" class ="categoryBtn" value = "not_selected">Food & Drink</button>
-				      <button type = "button" name = "household-tools" class ="categoryBtn" value = "not_selected">Household & Tools</button>
+				      <button type = "submit" name = "electronics" class ="<?php echo checkSelected('electronics') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Electronics</button>
+				      <button type = "submit" name = "firearms-ammunition" class ="<?php echo checkSelected('firearms-ammunition') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Firearms & Ammunition</button>
+				      <button type = "submit" name = "food-drink" class ="<?php echo checkSelected('food-drink') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Food & Drink</button>
+				      <button type = "submit" name = "household-tools" class ="<?php echo checkSelected('household-tools') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Household & Tools</button>
         </section>
         <section class = "categoryRow">
-				      <button type = "button" name = "lighters-flammables" class ="categoryBtn" value = "not_selected">Lighters & Flammables</button>
-				      <button type = "button" name = "medical" class ="categoryBtn" value = "not_selected">Medical</button>
-				      <button type = "button" name = "personal-items" class ="categoryBtn" value = "not_selected">Personal Items</button>
-				      <button type = "button" name = "sports-camping" class ="categoryBtn" value = "not_selected">Sports & Camping</button>
+				      <button type = "submit" name = "lighters-flammables" class ="<?php echo checkSelected('lighters-flammables') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Lighters & Flammables</button>
+				      <!-- <button type = "submit" name = "medical" class ="categoryBtn" value = "<?php //echo checkSelected() ?  'selected' :  'not_selected'; ?>">Medical</button> -->
+				      <!-- <button type = "submit" name = "medical" class ="<?php// echo checkSelected() ? 'selectedBtn' : 'categoryBtn' ?>" value = "<?php //echo checkSelected() ? 'selected' : 'not_selected' ?>">Medical</button> -->
+				      <button type = "submit" name = "medical" class ="<?php echo checkSelected('medical') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Medical</button>
+				      <button type = "submit" name = "personal-items" class ="<?php echo checkSelected('personal-items') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Personal Items</button>
+				      <button type = "submit" name = "sports-camping" class ="<?php echo checkSelected('sports-camping') ? 'selectedBtn' : 'categoryBtn' ?>" value = "not_selected">Sports & Camping</button>
         </section>
       </form>
 
-
-
-	<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Yes"); ?>
-			</div>
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("No"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
-
-<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Yes (<100ml)"); ?>
-			</div>
-
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("Yes (<350ml)"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
-
-<section class = "item_display">
-		<h1> Hydrogen Peroxide</h1>
-		<div class = "allowedStatus">
-			<div class = "allowedBox">
-				<span>Carried</span>
-				<?php echo getAllowedBoxText("Check with carrier"); ?>
-			</div>
-
-			<div class = "allowedBox">
-				<span>Checked</span>
-				<?php echo getAllowedBoxText("Check with carrier"); ?>
-			</div>
-		</div>
-		<div class="discriptionDisplay">
-				3% hydrogen peroxide found in drugstores and used to clean cuts is considered essential non-prescription medication. These liquids must be declared to the Screening Officer separately. Carry on: You can carry volumes greater than 100 ml (3.4 oz.) in your carry-on baggage. Checked: You can carry volumes greater than 100 ml (3.4 oz.) in your checked baggage.
-		</div>
-	</section>
+		</section>
 
     <script>
 
@@ -115,6 +106,31 @@ require_once('../private/initialize.php');
         buttons.item(i).addEventListener("click", selectButton);
       }
     </script>
+
+    <?php
+
+      if (!anyCategoriesSelected())
+      {
+        while($item = mysqli_fetch_assoc($items_set))
+        {
+          // If db field is null, it's returned to php and php understands it as null with is_null() but htmlspecialchars converts null to an empty string ""
+          // echo "<br><br>" . h($item["name"]) . ",<br> id=" . h($item["id"]) . ",<br> carry_on=" . h($item["carry_on"]). ",<br> checked=" . h($item["checked"]). ",<br> description=" . h($item["description"]);
+          echo createItemDisplay($item);
+          // echo createItemDisplay2($item);
+        }
+        mysqli_free_result($items_set);
+      }
+      else {
+        $categoriesArray = convertSessionSelectedToArrayOfIDs();
+        // $items_set = findItemsInMultCategories([6]);
+        $items_set = findItemsInMultCategories($categoriesArray);
+
+        while($item = mysqli_fetch_assoc($items_set))
+        {
+          echo createItemDisplay($item);
+        }
+      }
+    ?>
 
   </body>
 </html>
