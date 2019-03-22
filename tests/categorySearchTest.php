@@ -48,7 +48,6 @@
 
     }
 
-
 		public function testQueryItemsInMultipleCategories()
 		{
 			$category1 = 6;
@@ -81,19 +80,36 @@
 			$this ->assertFalse($foundInhalers, "found inhalers when shouldn't have");
 		}
 
-	public function testGetCategoryIDFromName()
-	{
-		$this -> assertEquals('1', findCategoryIdByName('electronics'));
+		// gotta redo this entire test
+		// public function testGetCategoryIDFromName()
+		// {
+		// 	$this -> assertEquals('1', findCategoryIdByName('electronics'));
 		// $this -> assertEquals('2', findCategoryIdByName('firearms-ammunition'));
-		$this -> assertEquals('3', findCategoryIdByName('food-drink'));
-		$this -> assertEquals('4', findCategoryIdByName('household-tools'));
-		$this -> assertEquals('5', findCategoryIdByName('lighters-flammables'));
-		$this -> assertEquals('6', findCategoryIdByName('medical'));
-		$this -> assertEquals('7', findCategoryIdByName('personal-items'));
-		$this -> assertEquals('8', findCategoryIdByName('sports-camping'));
-	}
+		// 	$this -> assertEquals('3', findCategoryIdByName('food-drink'));
+		// 	$this -> assertEquals('4', findCategoryIdByName('household-tools'));
+		// 	$this -> assertEquals('5', findCategoryIdByName('lighters-flammables'));
+		// 	$this -> assertEquals('6', findCategoryIdByName('medical'));
+		// 	$this -> assertEquals('7', findCategoryIdByName('personal-items'));
+		// 	$this -> assertEquals('8', findCategoryIdByName('sports-camping'));
+		// }
+
+		public function testGetAllCategoryNames()
+		{
+			$foundCategoriesNames = findAllCategoryNames();
+			$errors = [];
+			$expectedCategoriesNames = ["Electronics", "Firearms & Ammunition",
+																"Food & Drink", "Household & Tools",
+															  "Lighters & Flammables", "Medical",
+															  "Personal Items", "Sports & Camping"];
+			foreach ($expectedCategoriesNames as $expectedCategory)
+			{
+				if(in_array($expectedCategory, $foundCategoriesNames)===false)
+				{
+					$errors[] = "Expected {$expectedCategory} not in Categories Array";
+				}
+			}
+			$this -> assertTrue(empty($errors), implode(", ", $errors));
+		}
 
   }
-
-
  ?>

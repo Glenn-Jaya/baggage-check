@@ -1,27 +1,76 @@
 <?php
 
-  function url_for($script_path)
+  function anyCategoriesSelected()
   {
-    if ($script_path[0] != '/')
+    $categorySelected = false;
+    foreach ($_SESSION['selected'] as $categoryValue)
     {
-      $script_path = "/" . $script_path;
+      if ($categoryValue === 'selected')
+      {
+        $categorySelected = true;
+      }
     }
-    return WWW_ROOT . $script_path;
-  }
-  function u($string="") {
-    return urlencode($string);
+    return $categorySelected;
   }
 
-  function raw_u($string="") {
-    return rawurlencode($string);
+  function checkSelected($categoryName)
+  {
+    if (isset($_SESSION['selected'][$categoryName]) && $_SESSION['selected'][$categoryName]==='selected')
+    {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
-  function h($string="") {
-    return htmlspecialchars($string);
+  function createItemDisplay($item)
+  {
+    $carryOnText = find_allowed_name_by_id(h($item['carry_on']));
+    $checkedText = find_allowed_name_by_id(h($item['checked']));
+
+    $displayCode ="<section class = 'item-display'>";
+    $displayCode .= "<h1>" . h($item['name']) . "</h1>";
+		$displayCode .= "<div class = 'allowed-status'>";
+		$displayCode .= "<div class = 'allowed-box'>";
+		$displayCode .= "	<span>Carry On</span>";
+    $displayCode .= getAllowedBoxText($carryOnText);
+		$displayCode .= "</div>";
+    $displayCode .= "<div class = 'allowed-box'>";
+		$displayCode .= "<span>Checked</span>";
+    $displayCode .= getAllowedBoxText("$checkedText");
+		$displayCode .= "</div>";
+		$displayCode .= "</div>";
+		$displayCode .= "<div class='description-display'>";
+    $displayCode .= h($item["description"]);
+		$displayCode .= "</div>";
+	  $displayCode .= "</section>";
+
+    return $displayCode;
   }
 
-  function is_post_request() {
-    return $_SERVER['REQUEST_METHOD'] == 'POST';
+  // TODO Concert this to look from the database directly instead of hardcoded assoc array
+  $categoriesNameIdAssoc = ['electronics'=> '1', 'firearms-ammunition' => '2', 'food-drink' => '3',
+                            'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
+                            'personal-items'=>'7', 'sports-camping'=>'8'];
+
+  function convertCategoryNameToId($categoryName)
+  {
+    global $categoriesNameIdAssoc;
+    return $categoriesNameIdAssoc[$categoryName];
+  }
+
+  function convertSessionSelectedToArrayOfIDs()
+  {
+    $returnArray = [];
+    foreach($_SESSION['selected'] as $name => $value)
+    {
+      if ($value === 'selected' )
+      {
+        $returnArray[] = convertCategoryNameToId($name);
+      }
+    }
+    return $returnArray;
   }
 
   function getAllowedBoxText($allowed_name)
@@ -51,46 +100,50 @@
     return $result;
   }
 
-  function createItemDisplay($item)
+  function h($string="")
   {
-    $carryOnText = find_allowed_name_by_id(h($item['carry_on']));
-    $checkedText = find_allowed_name_by_id(h($item['checked']));
-
-    $displayCode ="<section class = 'item_display'>";
-    $displayCode .= "<h1>" . h($item['name']) . "</h1>";
-		$displayCode .= "<div class = 'allowedStatus'>";
-		$displayCode .= "<div class = 'allowedBox'>";
-		$displayCode .= "	<span>Carry On</span>";
-    $displayCode .= getAllowedBoxText($carryOnText);
-		$displayCode .= "</div>";
-    $displayCode .= "<div class = 'allowedBox'>";
-		$displayCode .= "<span>Checked</span>";
-    $displayCode .= getAllowedBoxText("$checkedText");
-		$displayCode .= "</div>";
-		$displayCode .= "</div>";
-		$displayCode .= "<div class='discriptionDisplay'>";
-    $displayCode .= h($item["description"]);
-		$displayCode .= "</div>";
-	  $displayCode .= "</section>";
-
-    return $displayCode;
+    return htmlspecialchars($string);
   }
 
+
   function initializeSessions()
-      {
-        $_SESSION ['item_name'] = '';
-        $_SESSION['selected'] = [
-          'electronics'=>'',
-          'firearms-ammunition' =>'',
-          'food-drink' =>'',
-          'household-tools' =>'',
-          'lighters-flammables' =>'',
-          'medical' =>'',
-          'personal-items' =>'',
-          'personal' =>'',
-          'sports-camping' =>''
-        ];
-      }
+  {
+    $_SESSION ['item_name'] = '';
+    $_SESSION['selected'] = [
+      'electronics'=>'',
+      'firearms-ammunition' =>'',
+      'food-drink' =>'',
+      'household-tools' =>'',
+      'lighters-flammables' =>'',
+      'medical' =>'',
+      'personal-items' =>'',
+      'personal' =>'',
+      'sports-camping' =>''
+    ];
+  }
+
+  function is_post_request()
+  {
+    return $_SERVER['REQUEST_METHOD'] == 'POST';
+  }
+
+  function isCategorySelectedInSession($categoryName)
+  {
+    $categoryNameInSession = isset($_SESSION['selected'][$categoryName]);
+    $categoryIsSelected = "selected" === $_SESSION['selected'][$categoryName];
+
+    return $categoryNameInSession && $categoryIsSelected;
+  }
+
+  function raw_u($string="")
+  {
+    return rawurlencode($string);
+  }
+
+  function u($string="")
+  {
+    return urlencode($string);
+  }
 
   function updateSelected($categoryName)
   {
@@ -102,10 +155,7 @@
       }
       elseif ($_POST[$categoryName] === "not_selected")
       {
-        // if(in_array($categoryName, $_SESSION['selected']))
-
-         if(isset($_SESSION['selected'][$categoryName]) &&
-            "selected" === $_SESSION['selected'][$categoryName])
+        if(isCategorySelectedInSession($categoryName))
         {
           $_SESSION['selected'][$categoryName] = "";
         }
@@ -113,53 +163,12 @@
     }
   }
 
-
-  function checkSelected($categoryName)
+function url_for($script_path)
+{
+  if ($script_path[0] != '/')
   {
-    if (isset($_SESSION['selected'][$categoryName]) && $_SESSION['selected'][$categoryName]==='selected')
-    {
-      return true;
-    }
-    else {
-      return false;
-    }
+    $script_path = "/" . $script_path;
   }
-
-  function anyCategoriesSelected()
-  {
-    $categorySelected = false;
-    foreach ($_SESSION['selected'] as $categoryValue)
-    {
-      if ($categoryValue === 'selected')
-      {
-        $categorySelected = true;
-      }
-    }
-    return $categorySelected;
-  }
-
-
-  $categoriesNameIdAssoc = ['electronics'=> '1', 'firearms-ammunition' => '2', 'food-drink' => '3',
-                            'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
-                            'personal-items'=>'7', 'sports-camping'=>'8'];
-
-  function convertCategoryNameToId($categoryName)
-  {
-    // TODO Concert this to look from the database directly instead of assoc array
-    global $categoriesNameIdAssoc;
-    return $categoriesNameIdAssoc[$categoryName];
-  }
-
-  function convertSessionSelectedToArrayOfIDs()
-  {
-    $returnArray = [];
-    foreach($_SESSION['selected'] as $name => $value)
-    {
-      if ($value === 'selected' )
-      {
-        $returnArray[] = convertCategoryNameToId($name);
-      }
-    }
-    return $returnArray;
-  }
- ?>
+  return WWW_ROOT . $script_path;
+}
+?>

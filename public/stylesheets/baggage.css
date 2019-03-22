@@ -1,121 +1,104 @@
-/* search bar: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_search_button */
 *{
 	margin:0;
 	padding: 0;
 }
 
+.allowed-box {
+	flex: 1;
+}
 
-h1 {
-	color: #30AB58;
+.allowed-status {
+	background-color: #E2F1AF;
+	color: #36160c;
+	display:flex;
+	padding:10px;
+}
+
+.allowed-status img {
+	vertical-align: middle;
+}
+
+.allowed-status span {
+	vertical-align: middle;
 }
 
 body {
-        background-color: #84714F;
-      }
-
-input[type=text]
-{
-	font-size: 20px;
-	width : 80%;
-	box-sizing: border-box;
-	height: 50px;
-
+	background-color: #84714F;
 }
 
-.searchButton {
-	width: 20%;
-	background: #30AB58;
-	color: white;
-	border: none;
-	vertical-align: top; /* look into what this does cause it fixed the issue */
-	height: 50px;
-}
-
-.searchBar {
-	display: block;
-	max-width: 80%;
-	margin: auto;
-	margin-bottom: 20px;
-}
-
-form {
-	max-width: 600px;
-	margin:auto;
-	margin-bottom: 20px;
-}
-
-.item_display{
-	background-color: #36160c;
-	max-width: 600px;
-	margin: auto;
-	border: 3px solid #30AB58;
-	font-family: Verdana;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.item_display h1
-{
-	padding: 10px;
-}
-
-/* .allowedStatus{ */
-.discriptionDisplay {
-	background-color: #E3D888;
-	color: #36160c;
-	padding: 10px;
-}
-
-/* .discriptionDisplay { */
-.allowedStatus{
-	background-color: #E2F1AF;
-	color: #36160c;
-	padding:10px;
-	/* align-content: stretch; */
-	/* vertical-align: middle; */
-	display:flex;
-}
-
-.allowedStatus img {
-	/* padding-top: 23px; */
-	/* background-color: red; */
-	vertical-align: middle;
-}
-
-.allowedStatus span {
-	vertical-align: middle;
-}
-
-.allowedBox{
-	/* display: inline; */
-	/* padding: 0 10%; */
-	flex: 1;
-}
-
-.categoryBtn {
-	/* max-width: 100%; */
-	max-width: 120px;
-	min-height: 40px;
-	flex: 1;
-	border: none;
-	color: white;
-	background-color: #30AB58;
-	/* margin:5px; */
-}
-
-.categoryRow{
+.category-row {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 10px;
 }
 
-.selectedBtn {
-	/* background-color: red; */
-	background-color: #E2F1AF;
-	max-width: 120px;
-	min-height: 40px;
-	flex: 1;
-	border: none;
-	/* color: white; */
+.description-display {
+	background-color: #E3D888;
 	color: #36160c;
+	padding: 10px;
+}
+
+form {
+	margin:auto;
+	margin-bottom: 20px;
+	max-width: 600px;
+}
+
+h1 {
+	color: #30AB58;
+}
+
+.item-display {
+	background-color: #36160c;
+	border: 3px solid #30AB58;
+	font-family: Verdana;
+	margin: auto;
+	margin-bottom: 20px;
+	max-width: 600px;
+	text-align: center;
+}
+
+.item-display h1 {
+	padding: 10px;
+}
+
+input[type=text] {
+	box-sizing: border-box;
+	font-size: 20px;
+	height: 50px;
+	width : 80%;
+}
+
+.not-selected-btn {
+	background-color: #30AB58;
+	border: none;
+	color: white;
+	flex: 1;
+	min-height: 40px;
+	max-width: 120px;
+}
+
+.search-bar {
+	display: block;
+	margin: auto;
+	margin-bottom: 20px;
+	max-width: 80%;
+}
+
+.search-button {
+	background: #30AB58;
+	border: none;
+	color: white;
+	width: 20%;
+	height: 50px;
+	vertical-align: top; /* look into what this does cause it fixed the issue */
+}
+
+.selected-btn {
+	background-color: #E2F1AF;
+	border: none;
+	color: #36160c;
+	flex: 1;
+	min-height: 40px;
+	max-width: 120px;
 }

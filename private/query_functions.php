@@ -101,6 +101,23 @@ function findCategoryIdByName($categoryName)
     return($foundID);
 }
 
+function findAllCategoryNames()
+{
+  global $db;
+  $categoriesArray = [];
+
+  $sql = "SELECT * FROM categories";
+
+  $resultSet = mysqli_query($db, $sql);
+  confirm_result_set($resultSet);
+  while($categoryRow = mysqli_fetch_assoc($resultSet))
+  {
+    $categoriesArray[] = $categoryRow["name"];
+  }
+  mysqli_free_result($resultSet);
+
+  return $categoriesArray;
+}
 
 
 ?>
