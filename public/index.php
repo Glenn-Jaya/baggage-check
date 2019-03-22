@@ -33,7 +33,7 @@ foreach ($_POST as $name =>$value)
       <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
 
         <div class = "search-bar">
-          <input type="text" name="item_name" placeholder= "Enter item to search"
+          <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
           ><button type="submit" class = "search-button"><i class="fa fa-search"></i></button>
         </div>
 
@@ -55,7 +55,7 @@ foreach ($_POST as $name =>$value)
 		</section>
 
     <?php
-      if (!anyCategoriesSelected())
+      if (anyCategoriesSelected()===false)
       {
         $items_set = find_all_items();
       }
@@ -66,7 +66,10 @@ foreach ($_POST as $name =>$value)
 
       while($item = mysqli_fetch_assoc($items_set))
       {
-        echo createItemDisplay($item);
+        if ( ($item_name === "") || stripos($item['name'], $item_name) !== false)
+        {
+          echo createItemDisplay($item);
+        }
       }
 
       mysqli_free_result($items_set);
