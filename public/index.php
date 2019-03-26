@@ -14,7 +14,6 @@ foreach ($_POST as $name =>$value)
   }
 }
 
-// echo "breakpoint"; // used for debugging purposes to have a breakpoint
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +27,12 @@ foreach ($_POST as $name =>$value)
     <script src="buttonHandler.js"></script>
   </head>
   <body>
-    <h1>Coming Soon!</h1>
+    <section id = header>
+      <h1>Baggage Check</h1>
+      <p>Determine what you can bring as carry on or checked luggage!<p>
+    </section>
+
+
 
       <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
 
