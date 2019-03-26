@@ -48,6 +48,26 @@ h1 {
 	color: #30AB58;
 }
 
+#header {
+	background-color: #36160c;
+	display: block;
+	margin: auto;
+	margin-top: 10px;
+	max-width: 600px;
+	text-align: center;
+}
+
+#header h1 {
+	color:white;
+	font-size:3em;
+	padding:10px;
+}
+
+#header p{
+	color: #30AB58;
+	padding:5px;
+}
+
 .item-display {
 	background-color: #36160c;
 	border: 3px solid #30AB58;
@@ -102,25 +122,4 @@ input[type=text] {
 	flex: 1;
 	min-height: 40px;
 	max-width: 120px;
-}
-
-#header {
-	background-color: #36160c;
-	display: block;
-	margin: auto;
-	color:white;
-	max-width: 600px;
-	text-align: center;
-	margin-top: 10px;
-}
-
-#header h1 {
-	color:white;
-	padding:10px;
-	font-size:3em;
-}
-
-#header p{
-	color: #30AB58;
-	padding:5px;
 }
