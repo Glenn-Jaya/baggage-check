@@ -171,4 +171,10 @@ function url_for($script_path)
   }
   return WWW_ROOT . $script_path;
 }
+
+function is_ajax_request()
+{
+	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+		$_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+}
 ?>

@@ -1,4 +1,5 @@
 <?php
+// sleep(10);
 require_once('../private/initialize.php');
 session_start();
 
@@ -13,6 +14,14 @@ foreach ($_POST as $name =>$value)
     updateSelected($name);
   }
 }
+
+if(is_ajax_request())
+{
+	echo "Ajax response";
+} else {
+	echo "Non-Ajax response";
+}
+
 
 ?>
 
@@ -34,7 +43,8 @@ foreach ($_POST as $name =>$value)
 
 
 
-      <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
+      <!-- <form id = "search-form" action = "<?php //echo url_for("/index.php"); ?>" method = "GET"> -->
+      <form id = "search-form" action = "<?php echo url_for("/processSearch.php"); ?>" method = "GET">
 
         <div class = "search-bar">
           <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
@@ -42,42 +52,46 @@ foreach ($_POST as $name =>$value)
         </div>
 
         <section class = "category-row">
-				      <button type = "submit" name = "electronics" class ="<?php echo checkSelected('electronics') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Electronics</button>
-				      <button type = "submit" name = "firearms-ammunition" class ="<?php echo checkSelected('firearms-ammunition') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Firearms & Ammunition</button>
-				      <button type = "submit" name = "food-drink" class ="<?php echo checkSelected('food-drink') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Food & Drink</button>
-				      <button type = "submit" name = "household-tools" class ="<?php echo checkSelected('household-tools') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Household & Tools</button>
+				      <button type = "button" name = "electronics" class ="<?php echo checkSelected('electronics') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Electronics</button>
+				      <button type = "button" name = "firearms-ammunition" class ="<?php echo checkSelected('firearms-ammunition') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Firearms & Ammunition</button>
+				      <button type = "button" name = "food-drink" class ="<?php echo checkSelected('food-drink') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Food & Drink</button>
+				      <button type = "button" name = "household-tools" class ="<?php echo checkSelected('household-tools') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Household & Tools</button>
         </section>
         <section class = "category-row">
-				      <button type = "submit" name = "lighters-flammables" class ="<?php echo checkSelected('lighters-flammables') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Lighters & Flammables</button>
-				      <!-- <button type = "submit" name = "medical" class ="not-selected-btn" value = "<?php //echo checkSelected() ?  'selected' :  'not_selected'; ?>">Medical</button> -->
-				      <!-- <button type = "submit" name = "medical" class ="<?php// echo checkSelected() ? 'selected-btn' : 'not-selected-btn' ?>" value = "<?php //echo checkSelected() ? 'selected' : 'not_selected' ?>">Medical</button> -->
-				      <button type = "submit" name = "medical" class ="<?php echo checkSelected('medical') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Medical</button>
-				      <button type = "submit" name = "personal-items" class ="<?php echo checkSelected('personal-items') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Personal Items</button>
-				      <button type = "submit" name = "sports-camping" class ="<?php echo checkSelected('sports-camping') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Sports & Camping</button>
+				      <button type = "button" name = "lighters-flammables" class ="<?php echo checkSelected('lighters-flammables') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Lighters & Flammables</button>
+				      <!-- <button type = "button" name = "medical" class ="not-selected-btn" value = "<?php //echo checkSelected() ?  'selected' :  'not_selected'; ?>">Medical</button> -->
+				      <!-- <button type = "button" name = "medical" class ="<?php// echo checkSelected() ? 'selected-btn' : 'not-selected-btn' ?>" value = "<?php //echo checkSelected() ? 'selected' : 'not_selected' ?>">Medical</button> -->
+				      <button type = "button" name = "medical" class ="<?php echo checkSelected('medical') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Medical</button>
+				      <button type = "button" name = "personal-items" class ="<?php echo checkSelected('personal-items') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Personal Items</button>
+				      <button type = "button" name = "sports-camping" class ="<?php echo checkSelected('sports-camping') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Sports & Camping</button>
         </section>
       </form>
 		</section>
 
     <?php
-      if (anyCategoriesSelected()===false)
-      {
-        $items_set = find_all_items();
-      }
-      else {
-        $categoriesArray = convertSessionSelectedToArrayOfIDs();
-        $items_set = findItemsInMultCategories($categoriesArray);
-      }
-
-      while($item = mysqli_fetch_assoc($items_set))
-      {
-        if ( ($item_name === "") || stripos($item['name'], $item_name) !== false)
-        {
-          echo createItemDisplay($item);
-        }
-      }
-
-      mysqli_free_result($items_set);
+      // if (anyCategoriesSelected()===false)
+      // {
+      //   $items_set = find_all_items();
+      // }
+      // else {
+      //   $categoriesArray = convertSessionSelectedToArrayOfIDs();
+      //   $items_set = findItemsInMultCategories($categoriesArray);
+      // }
+      //
+      // while($item = mysqli_fetch_assoc($items_set))
+      // {
+      //   if ( ($item_name === "") || stripos($item['name'], $item_name) !== false)
+      //   {
+      //     echo createItemDisplay($item);
+      //   }
+      // }
+      //
+      // mysqli_free_result($items_set);
     ?>
+
+    <section id = "items-list">
+
+    </section>
 
   </body>
 </html>
