@@ -8,7 +8,7 @@ function selectButton()
       this.classList.add("selected-btn");
       // this.value = "selected";
       // this.value += <?php $categories?>; // producered error
-      
+
     }
     else {
       this.classList.remove("selected-btn");

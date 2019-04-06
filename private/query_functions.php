@@ -73,6 +73,7 @@ function findItemNameById($id)
 function findItemsInMultCategories($categoriesArray)
 {
   global $db;
+  // $categoriesArray =['Electronics'];
 
   $sql = "SELECT * FROM items as it ";
   $sql .= "INNER JOIN item_category AS ic on it.id = ic.item_id ";
@@ -81,6 +82,7 @@ function findItemsInMultCategories($categoriesArray)
   $sql .= "GROUP BY it.id ";
   $sql .= "HAVING COUNT(it.id) = '" . count($categoriesArray) . "'";
 
+  echo 'the sql is' . $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
 

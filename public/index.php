@@ -64,12 +64,14 @@ echo 'The value of categoires is: ' . $categories;
 		</section>
 
     <?php
-      if (anyCategoriesSelected()===false)
+      // if (anyCategoriesSelected()===false)
+      if (strcmp($categories,'')===0)
       {
         $items_set = find_all_items();
       }
       else {
-        $categoriesArray = convertSessionSelectedToArrayOfIDs();
+        // $categoriesArray = convertSessionSelectedToArrayOfIDs();
+        $categoriesArray = explode('+',$categories);
         $items_set = findItemsInMultCategories($categoriesArray);
       }
 
