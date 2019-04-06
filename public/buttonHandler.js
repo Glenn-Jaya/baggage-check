@@ -6,12 +6,14 @@ function selectButton()
     {
       this.classList.remove("not-selected-btn");
       this.classList.add("selected-btn");
-      this.value = "selected";
+      // this.value = "selected";
+      // this.value += <?php $categories?>; // producered error
+      
     }
     else {
       this.classList.remove("selected-btn");
       this.classList.add("not-selected-btn");
-      this.value = "not_selected";
+      // this.value = "not_selected";
     }
 }
 

@@ -171,4 +171,42 @@ function url_for($script_path)
   }
   return WWW_ROOT . $script_path;
 }
+
+function setCategoriesValue($newCategory, $existingCategories)
+{
+  $categoriesArray = explode('+', $existingCategories);
+  $exists = false;
+  $counter=0;
+  foreach($categoriesArray as $category)
+  {
+    if(strcmp($newCategory, $category)===0)
+    {
+      $exists = true;
+      unset($categoriesArray[$counter]);
+      $existingCategories = implode('+',$categoriesArray);
+    }
+    $counter++;
+  }
+  if($exists===false)
+  {
+    if(strcmp($existingCategories,'')!==0)
+    {
+      $existingCategories .="+";
+    }
+    $existingCategories.= $newCategory;
+  }
+  return $existingCategories;
+}
+
+function isCategorySelected($newCategory, $categoriesValue)
+{
+  $categoriesArray = explode('+', $categoriesValue);
+  if (in_array($newCategory, $categoriesArray))
+  {
+    return 'selected-btn';
+  }
+  else {
+    return 'not-selected-btn';
+  }
+}
 ?>
