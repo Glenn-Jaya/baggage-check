@@ -18,12 +18,12 @@ $categories = $_GET['categories']??"";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
-    <a href="index.php">
       <section id = header>
+        <a href="index.php">
         <h1>Baggage Check</h1>
-        <p>Determine what you can bring as carry on or checked luggage!<p>
+        <p>Determine what you can bring as carry on or checked luggage!</p>
+        </a>
       </section>
-    </a>
 
       <form action = "<?php echo url_for("/index.php"); ?>" method = "GET">
 
