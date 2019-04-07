@@ -82,7 +82,6 @@ function findItemsInMultCategories($categoriesArray)
   $sql .= "GROUP BY it.id ";
   $sql .= "HAVING COUNT(it.id) = '" . count($categoriesArray) . "'";
 
-  echo 'the sql is' . $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
 

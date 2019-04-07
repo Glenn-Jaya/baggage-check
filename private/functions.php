@@ -54,6 +54,18 @@
                             'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
                             'personal-items'=>'7', 'sports-camping'=>'8'];
 
+  function convertCategoriesToIntArray($categories)
+  {
+    global $categoriesNameIdAssoc;
+    $categoriesStringArray = explode('+', $categories);
+    $returnArray = [];
+    foreach ($categoriesStringArray as $categoryString) {
+      // code...
+      $returnArray[] = $categoriesNameIdAssoc[$categoryString];
+    }
+    return $returnArray;
+  }
+
   function convertCategoryNameToId($categoryName)
   {
     global $categoriesNameIdAssoc;

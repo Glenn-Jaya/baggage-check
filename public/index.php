@@ -2,21 +2,8 @@
 require_once('../private/initialize.php');
 session_start();
 
-// $item_name = $_POST['item_name']??"";
-//
-// if(!isset($_SESSION['selected'])) { initializeSessions(); }
-//
-// foreach ($_POST as $name =>$value)
-// {
-//   if ($name !== "item_name")
-//   {
-//     updateSelected($name);
-//   }
-// }
-
 $item_name = $_GET['item_name']??"";
 $categories = $_GET['categories']??"";
-echo 'The value of categoires is: ' . $categories;
 
 
 ?>
@@ -64,15 +51,13 @@ echo 'The value of categoires is: ' . $categories;
 		</section>
 
     <?php
-      // if (anyCategoriesSelected()===false)
       if (strcmp($categories,'')===0)
       {
         $items_set = find_all_items();
       }
       else {
-        // $categoriesArray = convertSessionSelectedToArrayOfIDs();
-        $categoriesArray = explode('+',$categories);
-        $items_set = findItemsInMultCategories($categoriesArray);
+        $categoriesIntArray = convertCategoriesToIntArray($categories);
+        $items_set = findItemsInMultCategories($categoriesIntArray);
       }
 
       while($item = mysqli_fetch_assoc($items_set))
