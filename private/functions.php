@@ -54,6 +54,17 @@
                             'household-tools'=>'4', 'lighters-flammables'=>'5', 'medical'=>'6',
                             'personal-items'=>'7', 'sports-camping'=>'8'];
 
+  function convertCategoriesToIntArray($categories)
+  {
+    global $categoriesNameIdAssoc;
+    $categoriesStringArray = explode('+', $categories);
+    $returnArray = [];
+    foreach ($categoriesStringArray as $categoryString) {
+      $returnArray[] = $categoriesNameIdAssoc[$categoryString];
+    }
+    return $returnArray;
+  }
+
   function convertCategoryNameToId($categoryName)
   {
     global $categoriesNameIdAssoc;
@@ -170,5 +181,46 @@ function url_for($script_path)
     $script_path = "/" . $script_path;
   }
   return WWW_ROOT . $script_path;
+}
+
+function setCategoriesValue($newCategory, $categories)
+{
+  $categoriesArray = explode('+', $categories);
+
+  if(in_array($newCategory, $categoriesArray))
+  {
+    $categoriesArray = array_diff($categoriesArray, array($newCategory));
+    $categories = implode('+',$categoriesArray);
+  }
+  else
+  {
+    $categories = addCategoryToCategories($newCategory, $categories);
+  }
+  return $categories;
+}
+
+function addCategoryToCategories($newCategory, $categories)
+{
+  // if categories initially empty, should add to array without a plus.
+  // eg: categories = "category_name_1" instead of "category_name_1+"
+  // prevents extra element when exploding the categories string on '+'
+  if(strcmp($categories,'')!==0)
+  {
+    $categories .="+";
+  }
+  $categories.= $newCategory;
+  return $categories;
+}
+
+function isCategorySelected($newCategory, $categoriesValue)
+{
+  $categoriesArray = explode('+', $categoriesValue);
+  if (in_array($newCategory, $categoriesArray))
+  {
+    return 'selected-btn';
+  }
+  else {
+    return 'not-selected-btn';
+  }
 }
 ?>

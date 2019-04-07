@@ -2,17 +2,9 @@
 require_once('../private/initialize.php');
 session_start();
 
-$item_name = $_POST['item_name']??"";
+$item_name = $_GET['item_name']??"";
+$categories = $_GET['categories']??"";
 
-if(!isset($_SESSION['selected'])) { initializeSessions(); }
-
-foreach ($_POST as $name =>$value)
-{
-  if ($name !== "item_name")
-  {
-    updateSelected($name);
-  }
-}
 
 ?>
 
@@ -24,48 +16,45 @@ foreach ($_POST as $name =>$value)
 
     <link rel="stylesheet" media="all" href=" <?php echo url_for('stylesheets/baggage.css'); ?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="buttonHandler.js"></script>
   </head>
   <body>
-    <section id = header>
-      <h1>Baggage Check</h1>
-      <p>Determine what you can bring as carry on or checked luggage!<p>
-    </section>
+      <section id = header>
+        <a href="index.php">
+        <h1>Baggage Check</h1>
+        <p>Determine what you can bring as carry on or checked luggage!</p>
+        </a>
+      </section>
 
-
-
-      <form action = "<?php echo url_for("/index.php"); ?>" method = "POST">
+      <form action = "<?php echo url_for("/index.php"); ?>" method = "GET">
 
         <div class = "search-bar">
           <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
-          ><button type="submit" class = "search-button"><i class="fa fa-search"></i></button>
+          ><button type="submit" name = "categories" class = "search-button" value =<?php echo $categories; ?>><i class="fa fa-search"></i></button>
         </div>
 
         <section class = "category-row">
-				      <button type = "submit" name = "electronics" class ="<?php echo checkSelected('electronics') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Electronics</button>
-				      <button type = "submit" name = "firearms-ammunition" class ="<?php echo checkSelected('firearms-ammunition') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Firearms & Ammunition</button>
-				      <button type = "submit" name = "food-drink" class ="<?php echo checkSelected('food-drink') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Food & Drink</button>
-				      <button type = "submit" name = "household-tools" class ="<?php echo checkSelected('household-tools') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Household & Tools</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('electronics', $categories)); ?>" value = "<?php echo h(setCategoriesValue("electronics", $categories));?>">Electronics</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('firearms-ammunition', $categories)); ?>" value = "<?php echo h(setCategoriesValue("firearms-ammunition", $categories));?>">Firearms & Ammunition</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('food-drink', $categories)); ?>" value = "<?php echo h(setCategoriesValue("food-drink", $categories));?>">Food & Drink</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('household-tools', $categories)); ?>" value = "<?php echo h(setCategoriesValue("household-tools", $categories));?>">Household & Tools</button>
         </section>
         <section class = "category-row">
-				      <button type = "submit" name = "lighters-flammables" class ="<?php echo checkSelected('lighters-flammables') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Lighters & Flammables</button>
-				      <!-- <button type = "submit" name = "medical" class ="not-selected-btn" value = "<?php //echo checkSelected() ?  'selected' :  'not_selected'; ?>">Medical</button> -->
-				      <!-- <button type = "submit" name = "medical" class ="<?php// echo checkSelected() ? 'selected-btn' : 'not-selected-btn' ?>" value = "<?php //echo checkSelected() ? 'selected' : 'not_selected' ?>">Medical</button> -->
-				      <button type = "submit" name = "medical" class ="<?php echo checkSelected('medical') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Medical</button>
-				      <button type = "submit" name = "personal-items" class ="<?php echo checkSelected('personal-items') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Personal Items</button>
-				      <button type = "submit" name = "sports-camping" class ="<?php echo checkSelected('sports-camping') ? 'selected-btn' : 'not-selected-btn' ?>" value = "not_selected">Sports & Camping</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('lighters-flammables', $categories)); ?>" value = "<?php echo h(setCategoriesValue("lighters-flammables", $categories));?>">Lighters & Flammables</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('medical', $categories)); ?>" value = "<?php echo h(setCategoriesValue("medical", $categories));?>">Medical</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('personal-items', $categories)); ?>" value = "<?php echo h(setCategoriesValue("personal-items", $categories));?>">Personal Items</button>
+				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('sports-camping', $categories)); ?>" value = "<?php echo h(setCategoriesValue("sports-camping", $categories));?>">Sports & Camping</button>
         </section>
       </form>
 		</section>
 
     <?php
-      if (anyCategoriesSelected()===false)
+      if (strcmp($categories,'')===0)
       {
         $items_set = find_all_items();
       }
       else {
-        $categoriesArray = convertSessionSelectedToArrayOfIDs();
-        $items_set = findItemsInMultCategories($categoriesArray);
+        $categoriesIntArray = convertCategoriesToIntArray($categories);
+        $items_set = findItemsInMultCategories($categoriesIntArray);
       }
 
       while($item = mysqli_fetch_assoc($items_set))
