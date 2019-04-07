@@ -60,7 +60,6 @@
     $categoriesStringArray = explode('+', $categories);
     $returnArray = [];
     foreach ($categoriesStringArray as $categoryString) {
-      // code...
       $returnArray[] = $categoriesNameIdAssoc[$categoryString];
     }
     return $returnArray;
@@ -184,30 +183,33 @@ function url_for($script_path)
   return WWW_ROOT . $script_path;
 }
 
-function setCategoriesValue($newCategory, $existingCategories)
+function setCategoriesValue($newCategory, $categories)
 {
-  $categoriesArray = explode('+', $existingCategories);
-  $exists = false;
-  $counter=0;
-  foreach($categoriesArray as $category)
+  $categoriesArray = explode('+', $categories);
+
+  if(in_array($newCategory, $categoriesArray))
   {
-    if(strcmp($newCategory, $category)===0)
-    {
-      $exists = true;
-      unset($categoriesArray[$counter]);
-      $existingCategories = implode('+',$categoriesArray);
-    }
-    $counter++;
+    $categoriesArray = array_diff($categoriesArray, array($newCategory));
+    $categories = implode('+',$categoriesArray);
   }
-  if($exists===false)
+  else
   {
-    if(strcmp($existingCategories,'')!==0)
-    {
-      $existingCategories .="+";
-    }
-    $existingCategories.= $newCategory;
+    $categories = addCategoryToCategories($newCategory, $categories);
   }
-  return $existingCategories;
+  return $categories;
+}
+
+function addCategoryToCategories($newCategory, $categories)
+{
+  // if categories initially empty, should add to array without a plus.
+  // eg: categories = "category_name_1" instead of "category_name_1+"
+  // prevents extra element when exploding the categories string on '+'
+  if(strcmp($categories,'')!==0)
+  {
+    $categories .="+";
+  }
+  $categories.= $newCategory;
+  return $categories;
 }
 
 function isCategorySelected($newCategory, $categoriesValue)

@@ -16,23 +16,20 @@ $categories = $_GET['categories']??"";
 
     <link rel="stylesheet" media="all" href=" <?php echo url_for('stylesheets/baggage.css'); ?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="buttonHandler.js"></script>
   </head>
   <body>
-    <a href="index.php">Reset</a><br>
-    <a href="index.php?name=<?php echo u('john doe');?>">John</a>
-    <section id = header>
-      <h1>Baggage Check</h1>
-      <p>Determine what you can bring as carry on or checked luggage!<p>
-    </section>
-
-
+    <a href="index.php">
+      <section id = header>
+        <h1>Baggage Check</h1>
+        <p>Determine what you can bring as carry on or checked luggage!<p>
+      </section>
+    </a>
 
       <form action = "<?php echo url_for("/index.php"); ?>" method = "GET">
 
         <div class = "search-bar">
           <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
-          ><button type="submit" class = "search-button"><i class="fa fa-search"></i></button>
+          ><button type="submit" name = "categories" class = "search-button" value =<?php echo $categories; ?>><i class="fa fa-search"></i></button>
         </div>
 
         <section class = "category-row">
