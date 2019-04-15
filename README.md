@@ -2,7 +2,7 @@
 
 Determines whether an item is allowed as carry on or checked luggage at the airport.
 
-![BaggageGif](https://i.imgur.com/bTIIM1F.gifv)
+![BaggageGif](https://i.imgur.com/bTIIM1F.gif)
 
 My first php project using only procedural programming, no OO.
 
