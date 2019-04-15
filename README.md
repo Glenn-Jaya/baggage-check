@@ -2,7 +2,7 @@
 
 Determines whether an item is allowed as carry on or checked luggage at the airport.
 
-![Graphic](https://i.imgur.com/TUwzkr8.png)
+![BaggageGif](https://i.imgur.com/bTIIM1F.gifv)
 
 My first php project using only procedural programming, no OO.
 
@@ -17,9 +17,3 @@ I felt this was a great beginner project that would allow me the oppotunity to h
 Incorporates unit testing and basic CRUD on a sql database.
 
 Future goals: Incorporate Ajax.
-
----
-
-## Youtube video of it in action!
-
-[![Youtube Video](https://i.imgur.com/SrV6GUj.png)](https://www.youtube.com/watch?v=es09iq6FLjw)
