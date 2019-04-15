@@ -16,6 +16,7 @@ $categories = $_GET['categories']??"";
 
     <link rel="stylesheet" media="all" href=" <?php echo url_for('stylesheets/baggage.css'); ?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="autosuggest.js"></script>
   </head>
   <body>
       <section id = header>
@@ -30,6 +31,12 @@ $categories = $_GET['categories']??"";
         <div class = "search-bar">
           <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
           ><button type="submit" name = "categories" class = "search-button" value =<?php echo $categories; ?>><i class="fa fa-search"></i></button>
+      <ul id="suggestions">
+        <li><a href="search.php?q=alpha">Alpha</a></li>
+        <li><a href="search.php?q=beta">Beta</a></li>
+        <li><a href="search.php?q=gamma">Gamma</a></li>
+        <li><a href="search.php?q=delta">Delta</a></li>
+      </ul>
         </div>
 
         <section class = "category-row">
@@ -45,7 +52,6 @@ $categories = $_GET['categories']??"";
 				      <button type = "submit" name = "categories" class ="<?php echo h(isCategorySelected('sports-camping', $categories)); ?>" value = "<?php echo h(setCategoriesValue("sports-camping", $categories));?>">Sports & Camping</button>
         </section>
       </form>
-		</section>
 
     <?php
       if (strcmp($categories,'')===0)

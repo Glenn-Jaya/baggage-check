@@ -127,3 +127,29 @@ input[type=text] {
 	min-height: 40px;
 	max-width: 120px;
 }
+
+ul#suggestions {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	/* width: 300px; */
+	max-width: 80%;
+	display: none;
+}
+
+ul#suggestions li {
+
+}
+
+ul#suggestions li a {
+	display: block;
+	min-height: 1em;
+	padding:0.5em 10px;
+	background: #CCC;
+	color: #000;
+	text-decoration: none;
+}
+
+ul#suggestions li a:hover {
+	background: #AAA;
+}
