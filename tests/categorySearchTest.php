@@ -57,7 +57,7 @@
 
 			$catArray = [$category1, $category2];
 
-			$itemsSet = findItemsInMultCategories($catArray);
+			$itemsSet = findItemsInMultCategories($catArray,'');
 			// $itemsSet = find_all_items(); // used to make sure the test was working properly
 			$peroxideFoundAndInhalersNotFound = false;
 			$foundHydrogenPeroxide = false;

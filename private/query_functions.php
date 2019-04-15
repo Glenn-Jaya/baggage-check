@@ -1,11 +1,12 @@
 <?php
 
-function find_all_items()
+function find_all_items($item_name)
 {
   global $db;
 
 
   $sql = "SELECT * FROM items ";
+  $sql .= "WHERE LOCATE('" . $item_name . "', items.name)!=0";
   //echo $sql;
   $result = mysqli_query($db, $sql);
   confirm_result_set($result);
@@ -70,7 +71,7 @@ function findItemNameById($id)
     return($foundName);
 }
 
-function findItemsInMultCategories($categoriesArray)
+function findItemsInMultCategories($categoriesArray, $item_name)
 {
   global $db;
   // $categoriesArray =['Electronics'];
@@ -79,6 +80,7 @@ function findItemsInMultCategories($categoriesArray)
   $sql .= "INNER JOIN item_category AS ic on it.id = ic.item_id ";
   $categoriesInQuotes = "'".implode("','", $categoriesArray)."'";
   $sql .= "WHERE ic.category_id IN ( " . $categoriesInQuotes . ") ";
+  $sql .= "AND LOCATE('" . $item_name . "', it.name)!=0 ";
   $sql .= "GROUP BY it.id ";
   $sql .= "HAVING COUNT(it.id) = '" . count($categoriesArray) . "'";
 

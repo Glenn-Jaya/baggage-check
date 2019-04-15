@@ -50,19 +50,16 @@ $categories = $_GET['categories']??"";
     <?php
       if (strcmp($categories,'')===0)
       {
-        $items_set = find_all_items();
+        $items_set = find_all_items($item_name);
       }
       else {
         $categoriesIntArray = convertCategoriesToIntArray($categories);
-        $items_set = findItemsInMultCategories($categoriesIntArray);
+        $items_set = findItemsInMultCategories($categoriesIntArray, $item_name);
       }
 
       while($item = mysqli_fetch_assoc($items_set))
       {
-        if ( ($item_name === "") || stripos($item['name'], $item_name) !== false)
-        {
           echo createItemDisplay($item);
-        }
       }
 
       mysqli_free_result($items_set);
