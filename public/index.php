@@ -29,7 +29,7 @@ $categories = $_GET['categories']??"";
       <form action = "<?php echo url_for("/index.php"); ?>" method = "GET">
 
         <div class = "search-bar">
-          <input type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
+          <input id = "search" type="text" name="item_name" placeholder= "Enter item to search" value = <?php echo $item_name ?>
           ><button type="submit" name = "categories" class = "search-button" value =<?php echo $categories; ?>><i class="fa fa-search"></i></button>
       <ul id="suggestions">
         <li><a href="search.php?q=alpha">Alpha</a></li>
